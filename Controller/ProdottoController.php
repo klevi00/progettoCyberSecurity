@@ -1,0 +1,59 @@
+<?php
+
+namespace Controller;
+
+use Model\ProdottoRepository;
+use Psr\Container\ContainerInterface;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
+
+class ProdottoController
+{
+
+    private $container;
+
+    // constructor receives container instance
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function listAll(Request $request, Response $response, array $args): Response
+    {
+        return $this->listAllByGenre($request, $response, ['genere' => 'All']);
+    }
+
+    public function listAllByGenre(Request $request, Response $response, array $args): Response
+    {
+        $genere = $args['genere'];
+        if ($genere === 'Uomo')
+            $prodotti = ProdottoRepository::listAllMale();
+        else if ($genere === 'Donna')
+            $prodotti = ProdottoRepository::listAllFemale();
+        else
+            $prodotti = ProdottoRepository::listAll();
+        $engine = $this->container->get('template');
+        $response->getBody()->write($engine->render('negozio',
+            [
+                'prodotti' => $prodotti,
+                'genere' => $genere,
+                'immagini' => $this->container->get('images'),
+            ]
+        ));
+        return $response;
+    }
+
+    public function showProdotto(Request $request, Response $response, array $args): Response
+    {
+        $engine = $this->container->get('template');
+        $prodotto = ProdottoRepository::getProdotto($args['id']);
+        $response->getBody()->write($engine->render('prodotto',
+            [
+                'prodotto' => $prodotto,
+
+            ]
+        ));
+        return $response;
+    }
+
+}
