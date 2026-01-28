@@ -162,6 +162,7 @@ $app->get('/negozio/prodotto[/{id}]', ProdottoController::class . ':showProdotto
 
 $app->get('/negozio/carrello/add/{id}', CarrelloController::class . ':addProdotto');
 
+$app->get('/negozio/carrello', CarrelloController::class . ':showCarrello');
 
 //Parte per l'autenticazione
 
