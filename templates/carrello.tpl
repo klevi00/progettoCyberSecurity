@@ -10,7 +10,10 @@
 <ul>
     <?php foreach ($carrello as $prodotto): ?>
         <li>
-            <?=$prodotto['nome']?> – €<?=$prodotto['prezzo']?>
+            <?=$prodotto['nome']?> – €<?=$prodotto['prezzo']?> 
+            <form action="/negozio/carrello/rimuovi/<?=$prodotto['id']?>" method="get" style="display:inline;">
+            <button type="submit">Rimuovi</button>
+        </form>
         </li>
     <?php endforeach; ?>
 </ul>

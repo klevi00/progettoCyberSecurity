@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use Controller\AdminController;
 use DI\Container as Container;
@@ -163,6 +164,8 @@ $app->get('/negozio/prodotto[/{id}]', ProdottoController::class . ':showProdotto
 $app->get('/negozio/carrello/add/{id}', CarrelloController::class . ':addProdotto');
 
 $app->get('/negozio/carrello', CarrelloController::class . ':showCarrello');
+
+$app->get('/negozio/carrello/rimuovi/{id}', CarrelloController::class . ':deleteProdotto');
 
 //Parte per l'autenticazione
 
