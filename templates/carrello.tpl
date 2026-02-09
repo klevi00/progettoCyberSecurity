@@ -13,10 +13,17 @@
             <?=$prodotto['nome']?> – €<?=$prodotto['prezzo']?> 
             <form action="/negozio/carrello/rimuovi/<?=$prodotto['id']?>" method="get" style="display:inline;">
             <button type="submit">Rimuovi</button>
-        </form>
+            </form>
         </li>
     <?php endforeach; ?>
 </ul>
 
 <h2>Totale: <?=$totale?> </h2>
+<?php
+if($carrello){
+    echo '<form action="/negozio/acquisto" style="display:inline";>
+        <button type="submit">Acquista</button>
+        </form>';
+}
+?>
 

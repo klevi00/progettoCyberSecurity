@@ -77,6 +77,37 @@ class CarrelloController
 }
 
 
+public function acquisto(Request $request, Response $response, array $args): Response
+{
+    $engine = $this->container->get('template');
+    $cookieSessione = "PHPSESSID";
+    $carrello = [];
+    $totalePrezzo = 0;
+    foreach ($_COOKIE as $idProdotto => $valore) {
+
+        if ($idProdotto === $cookieSessione) {
+            continue;
+        }
+
+        $decoded = urldecode($valore);
+        [$nome, $prezzo] = explode(":", $decoded);
+
+        $carrello[] = [
+            'id'     => $idProdotto,
+            'nome'   => $nome,
+            'prezzo' => (float) $prezzo
+        ];
+        $totalePrezzo += $prezzo;
+    }
+
+    $response->getBody()->write($engine->render('acquisto', [
+            'totale' => $totalePrezzo
+        ])
+    );
+
+    return $response;
+}
+
 
 public function deleteProdotto(Request $request, Response $response, array $args): Response{
     $engine = $this->container->get('template');
@@ -157,6 +188,34 @@ public function addProdotto(Request $request, Response $response, array $args): 
     return $response;
 }
 
+public function acquisto(Request $request, Response $response, array $args): Response
+{
+    $engine = $this->container->get('template');
+
+    $carrello = [];
+    $totalePrezzo = 0;
+
+    foreach( $_SESSION['carrello'] as $id => $qta){
+        $prodotto = ProdottoRepository::getProdotto($id);
+
+        $totalePrezzo += $prodotto['prezzo'];
+
+        $carrello[] =[
+            'id' => $id,
+            'nome' => $prodotto['nome'],
+            'prezzo' => $prodotto['prezzo'],
+            'quantita' => $qta
+        ];
+
+    }
+    $response->getBody()->write($engine->render('acquisto', [
+            'totale' => $totalePrezzo
+        ])
+    );
+
+    return $response;
+}
+
 public function deleteProdotto(Request $request, Response $response, array $args): Response{
     $engine = $this->container->get('template');
 
@@ -173,7 +232,7 @@ public function deleteProdotto(Request $request, Response $response, array $args
     return $response;
 
 }
-
 */
+
 
 }
