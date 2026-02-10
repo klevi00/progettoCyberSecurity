@@ -18,7 +18,7 @@ class CarrelloController
         $this->container = $container;
     }
 
-
+/*
     public function addProdotto(Request $request, Response $response, array $args): Response
     {
         $engine = $this->container->get('template');
@@ -97,16 +97,16 @@ public function deleteProdotto(Request $request, Response $response, array $args
     return $response;
 
 }
+*/
 
-/*
 public function addProdotto(Request $request, Response $response, array $args): Response
     {
         $engine = $this->container->get('template');
         $prodotto = ProdottoRepository::getProdotto($args['id']);
 
-        if(!isset($_SESSION['carrello'])){
+        if(!isset($_SESSION['carrello']))
             $_SESSION['carrello'] = [];
-        }
+        
 
         $_SESSION['carrello'][$args['id']] = 1;
 
@@ -174,6 +174,6 @@ public function deleteProdotto(Request $request, Response $response, array $args
 
 }
 
-*/
+
 
 }

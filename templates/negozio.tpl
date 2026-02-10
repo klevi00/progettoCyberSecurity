@@ -13,7 +13,7 @@
         <div class="column col-3 col-xs-12">
             <div class="card">
             <div class="card-image">
-                <img src="<?php echo '/'. $immagini . '/'. $prodotto['image'];?>" class="img-responsive">
+                <img src="<?php echo '/'. $immagini . '/'. $prodotto['immagine'];?>" class="img-responsive">
             </div>
             <div class="card-header">
                 <div class="card-title h5"><?=$prodotto['nome']?></div>

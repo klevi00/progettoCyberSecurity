@@ -20,6 +20,21 @@ class Authenticator{
     {
         if (session_id() == "")
             session_start();
+        /*
+        if (session_id() !== "") 
+            return;
+        }
+        ini_set('session.use_strict_mode', '1');   // rifiuta session id non emessi dal server
+        ini_set('session.use_only_cookies', '1');  // niente session id in URL
+        ini_set('session.use_trans_sid', '0');     // niente inserimento SID nei link html
+        $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        session_set_cookie_params([
+            'httponly' => true,     // cookie non accessibile da js
+            'secure' => $isHttps,   // cookie viaggia solo su HTTPS
+            'samesite' => 'Lax',    // limita l'invio del cookie in richieste cross-site
+        ]);
+        session_start();*/
+           
     }
 
     public static function getUser():array|null{
@@ -38,6 +53,9 @@ class Authenticator{
                 //Memorizza nelle variabili di sessione tutti gli
                 //attributi di un utente, ritornati dalla funzione precedente
                 $_SESSION['user'] = $row;
+                // Mitigazione principale contro session fixation:
+                // dopo un cambio di privilegio (anonimo -> autenticato) rigenera l'id sessione
+                session_regenerate_id(true);
             }
         }
         //Se non è attiva una sessione ritorna falso
