@@ -167,6 +167,8 @@ $app->get('/negozio/carrello', CarrelloController::class . ':showCarrello');
 
 $app->get('/negozio/carrello/rimuovi/{id}', CarrelloController::class . ':deleteProdotto');
 
+$app->get('/negozio/acquisto', CarrelloController::class . ':acquisto');
+
 //Parte per l'autenticazione
 
 $app->get('/login', AdminController::class . ':login');
